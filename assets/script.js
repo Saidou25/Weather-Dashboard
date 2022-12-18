@@ -57,14 +57,17 @@ $(function () {
             cardtoday
               .append(cardtodayBody);
 
-            // coltoday
-            //   .append(cardtoday)
+            coltoday
+              .append(cardtoday)
 
             
 
-            $("#today-weather").append(cardtoday);
+            $("#today-weather").append(coltoday);
           })
-
+          
+          var colforecastTitle = $("<h2>").addClass("col-sm-12 ")
+          colforecastTitle.text("5 days forecast:")
+          $("#forecast-weather").append(colforecastTitle);
 
         var forecastUrl = "https://api.openweathermap.org/data/2.5/forecast?lat=" + latitude + "&lon=" + longitude + "&appid=" + apiKey + "&units=imperial";
 
@@ -73,6 +76,9 @@ $(function () {
             return response.json();
 
           })
+          
+          
+
 
           .then(function (forecastData) {
             console.log(forecastData)
@@ -84,15 +90,13 @@ $(function () {
             var forecastWind = (forecastData.list[i].main.wind);
             console.log(forecastHumidity);
 
-            // var colforecastTitle = $("<div>").addClass("col-sm-12 ")
-            // var colforecast = $("<div>").addClass("col border");
+            var colforecast = $("<div>").addClass("col border");
            var cardforecast = $("<div>").addClass("card border");
             var cardBodyforecast = $("<div>").addClass("card-body border");
             var cardforecastHumidity = $("<div>").addClass("card-humidity");
             var cardforecastTemp = $("<div>").addClass("card-temp");
             var cardforecastWind = $("<div>").addClass("card-wind");
 
-            // colforecastTitle.text("5 days forecast:")
             cardforecastHumidity.text("Humidity: " + forecastHumidity + " %");
             cardforecastTemp.text("Temp: " + forecastTemp + " F");
             cardforecastWind.text("Wind: " + forecastWind + " MPH");
@@ -109,15 +113,15 @@ $(function () {
             cardforecast
               .append(cardBodyforecast)
 
-            // colforecast
-            //   .append(cardforecast)
+            colforecast
+              .append(cardforecast)
 
               
               // colforecastTitle
               // .append(cardforecast)
 
 
-            $("#forecast-weather").append(cardforecast);
+            $("#forecast-weather").append(colforecast);
           }
          } )
         // .catch(function (error) {

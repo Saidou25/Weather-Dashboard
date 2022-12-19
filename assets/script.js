@@ -30,7 +30,7 @@ $(function () {
           })
           .then(function (renderWeather) {
             $("main-row").empty();
-            console.log(renderWeather)
+            console.log(renderWeather);
 
             var todayHumidity = (renderWeather.main.humidity);
             var todayTemp = (renderWeather.main.temp);
@@ -57,7 +57,7 @@ $(function () {
               .append(cardtodayBody);
 
             coltoday
-              .append(cardtoday)
+              .append(cardtoday);
 
             $("#today-weather").append(coltoday);
           })
@@ -82,12 +82,12 @@ $(function () {
               // console.log(dtTimeStamp)
               // var forecastDate = toDateString(dtTimeStamp)
 
-              // var icon = (forecastData.list[i].weather[i].icon);
-              // console.log(forecastData.list[i].weather[i]);
-              // console.log(icon);
 
 
-              // var forecastIcon = (src="https://openweathermap.org/img/wn/" + icon + "@2x.png")
+
+              var icon = (forecastData.list[i].weather[0].icon);
+              console.log(icon);
+              var forecastIcon = ("https://openweathermap.org/img/wn/" + icon + "@2x.png")
               var forecastTemp = (forecastData.list[i].main.temp);
               var forecastWind = (forecastData.list[i].wind.speed);
               var forecastHumidity = (forecastData.list[i].main.humidity);
@@ -96,28 +96,28 @@ $(function () {
               var colforecast = $("<div>").addClass("col border");
               var cardforecast = $("<div>").addClass("card border");
               var cardBodyforecast = $("<div>").addClass("card-body border");
+              var cardForecastIcon = $("<img/>").addClass("card-icon");
               var cardforecastTemp = $("<div>").addClass("card-temp");
-              // var cardForecastIcon = $("<img>").addClass("card-icon")
               var cardforecastWind = $("<div>").addClass("card-wind");
               var cardforecastHumidity = $("<div>").addClass("card-humidity");
 
-              // cardForecastIcon.attr(forecastIcon)
+              cardForecastIcon.attr("src", forecastIcon);
               cardforecastHumidity.text("Humidity: " + forecastHumidity + " %");
               cardforecastTemp.text("Temp: " + forecastTemp + " F");
               cardforecastWind.text("Wind: " + forecastWind + " MPH");
 
               cardBodyforecast
 
-                // .append(cardForecastIcon)
+                .append(cardForecastIcon)
                 .append(cardforecastTemp)
                 .append(cardforecastWind)
-                .append(cardforecastHumidity)
+                .append(cardforecastHumidity);
 
               cardforecast
-                .append(cardBodyforecast)
+                .append(cardBodyforecast);
 
               colforecast
-                .append(cardforecast)
+                .append(cardforecast);
 
               $("#forecast-weather").append(colforecast);
             }

@@ -32,34 +32,39 @@ $(function () {
             $("main-row").empty();
             console.log(renderWeather);
 
-            var todayHumidity = (renderWeather.main.humidity);
+            var mainIcon = (renderWeather.weather[0].icon)
+            var todayIcon = ("https://openweathermap.org/img/wn/" + mainIcon + "@2x.png")
             var todayTemp = (renderWeather.main.temp);
+            var todayHumidity = (renderWeather.main.humidity);
             var todayWind = (renderWeather.wind.speed);
 
-            var coltoday = $("<div>").addClass("col-sm-12");
-            var cardtoday = $("<div>").addClass("card");
-            var cardtodayBody = $("<div>").addClass("card-body");
-            var cardtodayHumidity = $("<div>").addClass("card-humidity");
-            var cardtodayTemp = $("<div>").addClass("card-temp");
-            var cardtodayWind = $("<div>").addClass("card-wind");
+            var colToday = $("<div>").addClass("col-sm-12");
+            var cardToday = $("<div>").addClass("card");
+            var cardTodayBody = $("<div>").addClass("card-body");
+            var cardTodayIcon = $("<img/>").addClass("card-icon");
+            var cardTodayTemp = $("<div>").addClass("card-temp");
+            var cardTodayHumidity = $("<div>").addClass("card-humidity");
+            var cardTodayWind = $("<div>").addClass("card-wind");
 
-            cardtodayHumidity.text("Humidity: " + todayHumidity + " %");
-            cardtodayTemp.text("Temp: " + todayTemp + " F");
-            cardtodayWind.text("Wind: " + todayWind + " MPH");
+            cardTodayIcon.attr("src", todayIcon);
+            cardTodayTemp.text("Temp: " + todayTemp + " F");
+            cardTodayHumidity.text("Humidity: " + todayHumidity + " %");
+            cardTodayWind.text("Wind: " + todayWind + " MPH");
 
-            cardtodayBody
-              .append(cityReturn + currentDay)
-              .append(cardtodayTemp)
-              .append(cardtodayWind)
-              .append(cardtodayHumidity);
+            cardTodayBody
+              .append(cityReturn + currentDay + cardTodayIcon)
+              // .append(cardTodayIcon)
+              .append(cardTodayTemp)
+              .append(cardTodayWind)
+              .append(cardTodayHumidity);
 
-            cardtoday
-              .append(cardtodayBody);
+            cardToday
+              .append(cardTodayBody);
 
-            coltoday
-              .append(cardtoday);
+            colToday
+              .append(cardToday);
 
-            $("#today-weather").append(coltoday);
+            $("#today-weather").append(colToday);
           })
 
         var colforecastTitle = $("<h2>").addClass("col-sm-12 ")
@@ -72,7 +77,6 @@ $(function () {
           .then(function (response) {
             return response.json();
           })
-
           .then(function (forecastData) {
             console.log(forecastData)
             $("main-row").empty();
@@ -82,16 +86,12 @@ $(function () {
               // console.log(dtTimeStamp)
               // var forecastDate = toDateString(dtTimeStamp)
 
-
-
-
               var icon = (forecastData.list[i].weather[0].icon);
               console.log(icon);
-              var forecastIcon = ("https://openweathermap.org/img/wn/" + icon + "@2x.png")
+              var forecastIcon = ("https://openweathermap.org/img/wn/" + icon + "@2x.png");
               var forecastTemp = (forecastData.list[i].main.temp);
               var forecastWind = (forecastData.list[i].wind.speed);
               var forecastHumidity = (forecastData.list[i].main.humidity);
-
 
               var colforecast = $("<div>").addClass("col border");
               var cardforecast = $("<div>").addClass("card border");

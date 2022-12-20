@@ -1,6 +1,11 @@
 
 
 var currentDay = dayjs().format(" (M/D/YYYY)");
+console.log(currentDay)
+var test0 = dayjs()
+console.log(test0)
+var test = dayjs().$D
+console.log(test)
 var apiKey = "4f112ad8f388d7d13afdcbf2472fed94";
 
 $(function () {
@@ -23,7 +28,7 @@ $(function () {
           var longitude = (data[i].lon);
         }
         var todayWeathetUrl = "https://api.openweathermap.org/data/2.5/weather?lat=" + latitude + "&lon=" + longitude + "&appid=" + apiKey + "&units=imperial";
-
+console.log(todayWeathetUrl)
         fetch(todayWeathetUrl)
           .then(function (response) {
             return response.json();
@@ -82,8 +87,8 @@ $(function () {
             $("main-row").empty();
             for (var i = 0; i < forecastData.list.length; i += 8) {
 
-              // var dtTimeStamp = (forecastData.list[i].clouds.dt)
-              // console.log(dtTimeStamp)
+               var dtTimeStamp = (forecastData.list[i].clouds.dt)
+               console.log(dtTimeStamp)
               // var forecastDate = toDateString(dtTimeStamp)
 
               var icon = (forecastData.list[i].weather[0].icon);

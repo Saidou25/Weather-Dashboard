@@ -1,7 +1,12 @@
 
+var date = new Date();
+date.setDate(date.getDate() + 2);
+console.log(date.toLocaleDateString())
 
-var currentDay = dayjs().format(" (M/D/YYYY)");
+var currentDay = dayjs().format(" (M/D/YYYY)"); 
+
 console.log(currentDay)
+
 var test0 = dayjs()
 console.log(test0)
 var test = dayjs().$D
@@ -28,14 +33,14 @@ $(function () {
           var longitude = (data[i].lon);
         }
         var todayWeathetUrl = "https://api.openweathermap.org/data/2.5/weather?lat=" + latitude + "&lon=" + longitude + "&appid=" + apiKey + "&units=imperial";
-console.log(todayWeathetUrl)
+
         fetch(todayWeathetUrl)
           .then(function (response) {
             return response.json();
           })
           .then(function (renderWeather) {
             $("main-row").empty();
-            console.log(renderWeather);
+        
 
             var mainIcon = (renderWeather.weather[0].icon)
             var todayIcon = ("https://openweathermap.org/img/wn/" + mainIcon + "@2x.png")

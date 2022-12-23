@@ -1,8 +1,11 @@
 
+
 var currentDay = dayjs().format(" (M/D/YYYY)");
 var apiKey = "4f112ad8f388d7d13afdcbf2472fed94";
 
+
 var todayWeather = (function (data) {
+  console.log(data)
 
   var mainIcon = (data.weather[0].icon)
   var todayIcon = ("https://openweathermap.org/img/wn/" + mainIcon + "@2x.png")
@@ -24,7 +27,7 @@ var todayWeather = (function (data) {
   cardTodayWind.text("Wind: " + todayWind + " MPH");
 
   cardTodayBody
-  // .append(cityReturn + currentDay)
+    .append(currentDay)
     .append(cardTodayIcon)
     .append(cardTodayTemp)
     .append(cardTodayWind)
@@ -78,56 +81,8 @@ var forecastWeather = function (data) {
   }
 };
 
-// event.preventDefault();
-// var history = JSON.parse(localStorage.getItem("searched")) || []
-// console.log(history)
-// history.push(cityName)
-// localStorage.setItem("searched", JSON.stringify(history))
-// var colSavedBtn = $("<div>").addClass("col-saved-btn")
-// var savedBtn = $("<btn>").addClass("btn")
+var fetchWeather = function () {
 
-// savedBtn.append(cityName)
-// colSavedBtn.append(savedBtn)
-// $("#saved-btn").append(colSavedBtn)
-
-// $("#saved-btn").on("click", function () {
-
-
-//   $(".btn").on("click", function (event) {
-
-//     var cityName = $("#cityNameInput").val();
-
-
-//     var cityNameUrl = "http://api.openweathermap.org/geo/1.0/direct?q=" + cityName + "&appid=" + apiKey;
-
-//     fetch(cityNameUrl)
-//     .then(function (response) {
-//       return response.json();
-//     })
-//     .then(function (data) {
-//       console.log(data)
-
-//       for (var i = 0; i < data.length; i++) {
-//         // var cityReturn = (data[i].name)
-//         var latitude = (data[i].lat);
-//         var longitude = (data[i].lon);
-//       }
-
-//       var todayWeathetUrl = "https://api.openweathermap.org/data/2.5/weather?lat=" + latitude + "&lon=" + longitude + "&appid=" + apiKey + "&units=imperial";
-
-//       fetch(todayWeathetUrl)
-//       .then(function (response) {
-//         if (response.ok) {
-//           response.json().then(todayWeather)
-//         }
-//       })
-//       .catch(function (error) {
-//       })
-
-
-$(".btn").on("click", function (event) {
-  $("cityNameInput").empty();
-  event.preventDefault();
   var cityName = $("#cityNameInput").val();
   var requestUrl = "http://api.openweathermap.org/geo/1.0/direct?q=" + cityName + "&appid=" + apiKey;
 
@@ -139,67 +94,62 @@ $(".btn").on("click", function (event) {
     .then(function (data) {
       console.log(data)
       for (var i = 0; i < data.length; i++) {
-        // var cityReturn = (data[i].name)
+        console.log(data)
+        var cityReturn = data[0].name
+
         var latitude = (data[i].lat);
         var longitude = (data[i].lon);
+
+        var todayWeathetUrl = "https://api.openweathermap.org/data/2.5/weather?lat=" + latitude + "&lon=" + longitude + "&appid=" + apiKey + "&units=imperial";
+
+        fetch(todayWeathetUrl)
+          .then(function (response) {
+            if (response.ok) {
+              console.log(cityReturn)
+              response.json().then(todayWeather)
+            }
+          })
+
+        var forecastUrl = "https://api.openweathermap.org/data/2.5/forecast?lat=" + latitude + "&lon=" + longitude + "&appid=" + apiKey + "&units=imperial";
+
+        fetch(forecastUrl)
+          .then(function (response) {
+            if (response.ok) {
+              response.json().then(forecastWeather);
+            }
+          })
       }
-      var todayWeathetUrl = "https://api.openweathermap.org/data/2.5/weather?lat=" + latitude + "&lon=" + longitude + "&appid=" + apiKey + "&units=imperial";
+    })
+}
 
-      fetch(todayWeathetUrl)
-        .then(function (response) {
-          if (response.ok) {
-            response.json().then(todayWeather)
-          }
-        })
+$(".btn").on("click", function () {
+  $(".form-control").empty();
+  fetchWeather()
 
-      var forecastUrl = "https://api.openweathermap.org/data/2.5/forecast?lat=" + latitude + "&lon=" + longitude + "&appid=" + apiKey + "&units=imperial";
+  var cityName = $("#cityNameInput").val();
+  var history = JSON.parse(localStorage.getItem("searched")) || []
 
-      fetch(forecastUrl)
-        .then(function (response) {
-          if (response.ok) {
-            response.json().then(forecastWeather);
-          }
-        })
+  history.push(cityName)
+  localStorage.setItem("searched", JSON.stringify(history))
 
-      var colforecastTitle = $("<h2>").addClass("col-sm-12 ")
-      colforecastTitle.text("5 days forecast:")
-      $("#forecast-weather").append(colforecastTitle);
+  var colforecastTitle = $("<h2>").addClass("col-sm-12 ")
+  colforecastTitle.text("5 days forecast:")
+  $("#forecast-weather").append(colforecastTitle)
 
-    });
+  var colSavedBtn = $("<div>").addClass("col-saved-btn")
+  var savedBtn = $("<btn>").addClass("btn")
+
+
+  savedBtn.append(cityName)
+  colSavedBtn.append(savedBtn)
+
+  $(".row-btn-saved").append(colSavedBtn)
+
 });
 
-            // var colforecastTitle = $("<h2>").addClass("col-sm-12 ")
-            // colforecastTitle.text("5-day forecast:")
-            // $("#forecast-weather").append(colforecastTitle);
-
-            // var forecastUrl = "https://api.openweathermap.org/data/2.5/forecast?lat=" + latitude + "&lon=" + longitude + "&appid=" + apiKey + "&units=imperial";
-
-            // fetch(forecastUrl)
-            // .then(function (response) {
-            //   if (response.ok) {
-            //     response.json().then(data);
-            //   }
-            // })
-            // .catch(function (error) {
-            // });
-
-
-    // console.log(data)
-
-    // var days = [1, 2, 3, 4, 5]
-    // for (var j = 0; j < days.length; j++) {
-    //   console.log(days[j])
-    //   var date = new Date();
-    //   date.setDate(date.getDate() + days[j]);
-    //   var colforecastDate = $("<div>").addClass("col-date");
-    //   var cardBodyforecastDate = $("<div>").addClass("card-body-date");
-    //   var cardforecastDate = $("<div>").addClass("card-date");
-    //   var forecastDate = (date.toLocaleDateString())
 
 
 
-    //   .append(cardforecastDate)
-    // }
 
 
 

@@ -5,7 +5,7 @@ var apiKey = "4f112ad8f388d7d13afdcbf2472fed94";
 
 
 var todayWeather = (function (data) {
-  console.log(data)
+ 
 
   var mainIcon = (data.weather[0].icon)
   var todayIcon = ("https://openweathermap.org/img/wn/" + mainIcon + "@2x.png")
@@ -92,9 +92,9 @@ var fetchWeather = function () {
 
     })
     .then(function (data) {
-      console.log(data)
+      
       for (var i = 0; i < data.length; i++) {
-        console.log(data)
+       
         var cityReturn = data[0].name
 
         var latitude = (data[i].lat);
@@ -105,7 +105,7 @@ var fetchWeather = function () {
         fetch(todayWeathetUrl)
           .then(function (response) {
             if (response.ok) {
-              console.log(cityReturn)
+           
               response.json().then(todayWeather)
             }
           })
@@ -123,8 +123,10 @@ var fetchWeather = function () {
 }
 
 $(".btn").on("click", function () {
-  $(".form-control").empty();
-  fetchWeather()
+  $("#today-weather").empty();
+  $("#forecast-weather").empty();
+
+fetchWeather()
 
   var cityName = $("#cityNameInput").val();
   var history = JSON.parse(localStorage.getItem("searched")) || []

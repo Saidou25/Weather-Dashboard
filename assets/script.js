@@ -122,7 +122,7 @@ var fetchWeather = function () {
     })
 }
 
-$(".btn").on("click", function () {
+$(".btn-primary").on("click", function () {
   $("#today-weather").empty();
   $("#forecast-weather").empty();
 
@@ -139,14 +139,18 @@ fetchWeather()
   $("#forecast-weather").append(colforecastTitle)
 
   var colSavedBtn = $("<div>").addClass("col-saved-btn")
-  var savedBtn = $("<btn>").addClass("btn")
+  var savedBtn = $("<button>").addClass("btn btn-secondary")
 
 
   savedBtn.append(cityName)
   colSavedBtn.append(savedBtn)
 
-  $(".row-btn-saved").append(colSavedBtn)
-
+  $(".row-btn-saved").append(colSavedBtn);
+  
+  $("#cityNameInput").val("");
+  $(".btn-secondary").on("click", function() {
+    console.log("hello");
+  })
 });
 
 

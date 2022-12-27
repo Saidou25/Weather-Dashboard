@@ -2,7 +2,6 @@
 var apiKey = "4f112ad8f388d7d13afdcbf2472fed94";
 
 var todayWeather = (function (data) {
-  console.log(data);
 
   var todayTitle = (data.name);
   var todayDate = (data.dt);
@@ -24,7 +23,6 @@ var todayWeather = (function (data) {
   var cardTodayTemp = $("<div>").addClass("card-temp");
   var cardTodayHumidity = $("<div>").addClass("card-humidity");
   var cardTodayWind = $("<div>").addClass("card-wind");
-
 
   cardtodayTitle.text(todayTitle + " " + "(" + todayDateinfo + ")");
   cardTodayIcon.attr("src", todayIcon);
@@ -51,14 +49,11 @@ var todayWeather = (function (data) {
 var forecastWeather = function (data) {
   $("forecast-weather").empty();
 
-
   for (var i = 0; i < data.list.length; i += 8) {
 
-    var forecastDate = (data.list[i].dt);
-
-    const foreDate = new Date(forecastDate * 1000);
+    var forecastDate = (data.list[i].dt_txt);
+    const foreDate = new Date(forecastDate);
     var forecastDateinfo = (foreDate.toLocaleDateString('en-US'));
-    console.log(forecastDateinfo);
 
     var icon = (data.list[i].weather[0].icon);
     var forecastIcon = ("https://openweathermap.org/img/wn/" + icon + "@2x.png");
@@ -112,8 +107,6 @@ var fetchWeather = function () {
 
       for (var i = 0; i < data.length; i++) {
 
-        var cityReturn = data[0].name
-
         var latitude = (data[i].lat);
         var longitude = (data[i].lon);
 
@@ -123,7 +116,7 @@ var fetchWeather = function () {
           .then(function (response) {
             if (response.ok) {
 
-              response.json().then(todayWeather)
+              response.json().then(todayWeather);
             }
           })
 
@@ -143,29 +136,33 @@ $(".btn-primary").on("click", function () {
   $("#today-weather").empty();
   $("#forecast-weather").empty();
 
-  fetchWeather()
+  fetchWeather();
 
   var cityName = $("#cityNameInput").val();
   var history = JSON.parse(localStorage.getItem("searched")) || []
 
-  history.push(cityName)
-  localStorage.setItem("searched", JSON.stringify(history))
+  history.push(cityName);
+  localStorage.setItem("searched", JSON.stringify(history));
 
-  var colforecastTitle = $("<h2>").addClass("col-sm-12 ")
-  colforecastTitle.text("5 days forecast:")
-  $("#forecast-weather").append(colforecastTitle)
+  var colforecastTitle = $("<h2>").addClass("col-sm-12 ");
+  colforecastTitle.text("5 days forecast:");
+  $("#forecast-weather").append(colforecastTitle);
 
-  var colSavedBtn = $("<div>").addClass("col-saved-btn")
-  var savedBtn = $("<button>").addClass("btn btn-secondary")
+  var colSavedBtn = $("<div>").addClass("col-saved-btn");
+  var savedBtn = $("<button>").addClass("btn btn-secondary");
 
 
-  savedBtn.append(cityName)
-  colSavedBtn.append(savedBtn)
+  savedBtn.append(cityName);
+  colSavedBtn.append(savedBtn);
 
   $(".row-btn-saved").append(colSavedBtn);
 
   $("#cityNameInput").val("");
+
   $(".btn-secondary").on("click", function () {
+    $("#today-weather").empty();
+    $("#forecast-weather").empty();
+
     console.log("hello");
   })
 });

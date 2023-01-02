@@ -1,37 +1,37 @@
 
 var apiKey = "4f112ad8f388d7d13afdcbf2472fed94";
 
-var todayWeather = (function (data) {
+var todayWeather = (function (response) {
 
-  var todayTitle = (data.name);
-  var todayDate = (data.dt);
+  var cityName = (response.name);
+  var todayDate = (response.dt);
 
   var date = new Date(todayDate * 1000);
   var todayDateinfo = (date.toLocaleDateString('en-US'));
 
-  var mainIcon = (data.weather[0].icon);
+  var mainIcon = (response.weather[0].icon);
   var todayIcon = ("https://openweathermap.org/img/wn/" + mainIcon + "@2x.png");
-  var todayTemp = (data.main.temp);
-  var todayHumidity = (data.main.humidity);
-  var todayWind = (data.wind.speed);
+  var todayTemp = (response.main.temp);
+  var todayHumidity = (response.main.humidity);
+  var todayWind = (response.wind.speed);
 
   var colToday = $("<div>").addClass("col-sm-12");
   var cardToday = $("<div>").addClass("card");
   var cardTodayBody = $("<div>").addClass("card-body");
-  var cardtodayTitle = $("<h3>").addClass("card-title");
+  var cardcityName = $("<h3>").addClass("card-title");
   var cardTodayIcon = $("<img/>").addClass("card-icon");
   var cardTodayTemp = $("<div>").addClass("card-temp");
   var cardTodayHumidity = $("<div>").addClass("card-humidity");
   var cardTodayWind = $("<div>").addClass("card-wind");
 
-  cardtodayTitle.text(todayTitle + " " + "(" + todayDateinfo + ")");
+  cardcityName.text(cityName + " " + "(" + todayDateinfo + ")");
   cardTodayIcon.attr("src", todayIcon);
   cardTodayTemp.text("Temp: " + todayTemp + " F");
   cardTodayHumidity.text("Humidity: " + todayHumidity + " %");
   cardTodayWind.text("Wind: " + todayWind + " MPH");
 
   cardTodayBody
-    .append(cardtodayTitle)
+    .append(cardcityName)
     .append(cardTodayIcon)
     .append(cardTodayTemp)
     .append(cardTodayWind)
@@ -44,6 +44,7 @@ var todayWeather = (function (data) {
     .append(cardToday);
 
   $("#today-weather").append(colToday);
+
 });
 
 var forecastWeather = function (data) {
@@ -61,9 +62,9 @@ var forecastWeather = function (data) {
     var forecastWind = (data.list[i].wind.speed);
     var forecastHumidity = (data.list[i].main.humidity);
 
-    var colforecast = $("<div>").addClass("col border");
-    var cardforecast = $("<div>").addClass("card border");
-    var cardBodyforecast = $("<div>").addClass("card-body border");
+    var colforecast = $("<div>").addClass("col");
+    var cardforecast = $("<div>").addClass("card");
+    var cardBodyforecast = $("<div>").addClass("card-body");
     var cardforecastDate = $("<div>").addClass("card-date");
     var cardForecastIcon = $("<img/>").addClass("card-icon");
     var cardforecastTemp = $("<div>").addClass("card-temp");
@@ -90,12 +91,12 @@ var forecastWeather = function (data) {
       .append(cardforecast);
 
     $("#forecast-weather").append(colforecast);
+
   }
 };
 
-var fetchWeather = function () {
+var fetchWeather = function (cityName) {
 
-  var cityName = $("#cityNameInput").val();
   var requestUrl = "http://api.openweathermap.org/geo/1.0/direct?q=" + cityName + "&appid=" + apiKey;
 
   fetch(requestUrl)
@@ -104,13 +105,38 @@ var fetchWeather = function () {
 
     })
     .then(function (data) {
-
+      console.log(data)
       for (var i = 0; i < data.length; i++) {
+        var searchedCity = data[i].name;
 
         var latitude = (data[i].lat);
         var longitude = (data[i].lon);
-
         var todayWeathetUrl = "https://api.openweathermap.org/data/2.5/weather?lat=" + latitude + "&lon=" + longitude + "&appid=" + apiKey + "&units=imperial";
+
+        var history = JSON.parse(localStorage.getItem("searched")) || []
+
+        if (!history.includes(searchedCity)) {
+
+          history.push(searchedCity);
+          localStorage.setItem("searched", JSON.stringify(history));
+        }
+
+        var colforecastTitle = $("<h4>").addClass("col-sm-12 ");
+        colforecastTitle.text("5-Day Forecast:");
+        $("#forecast-weather").append(colforecastTitle);
+
+        var colSavedBtn = $("<div>").addClass("col saved-btn");
+
+        var savedBtn = $("<button>").addClass("btn btn-secondary");
+
+
+        savedBtn.text(searchedCity);
+        colSavedBtn.append(savedBtn);
+
+        $(".row-btn-saved").append(colSavedBtn);
+
+        $("#cityNameInput").val("");
+
 
         fetch(todayWeathetUrl)
           .then(function (response) {
@@ -132,38 +158,19 @@ var fetchWeather = function () {
     })
 }
 
-$(".btn-primary").on("click", function () {
+$(".btn-primary").on("click", function (event) {
+  event.preventDefault();
   $("#today-weather").empty();
   $("#forecast-weather").empty();
-
-  fetchWeather();
-
   var cityName = $("#cityNameInput").val();
-  var history = JSON.parse(localStorage.getItem("searched")) || []
+  fetchWeather(cityName);
 
-  history.push(cityName);
-  localStorage.setItem("searched", JSON.stringify(history));
-
-  var colforecastTitle = $("<h2>").addClass("col-sm-12 ");
-  colforecastTitle.text("5 days forecast:");
-  $("#forecast-weather").append(colforecastTitle);
-
-  var colSavedBtn = $("<div>").addClass("col-saved-btn");
-  var savedBtn = $("<button>").addClass("btn btn-secondary");
-
-
-  savedBtn.append(cityName);
-  colSavedBtn.append(savedBtn);
-
-  $(".row-btn-saved").append(colSavedBtn);
-
-  $("#cityNameInput").val("");
-
-  $(".btn-secondary").on("click", function () {
+  $(".btn-secondary").on("click", function (e) {
     $("#today-weather").empty();
     $("#forecast-weather").empty();
 
-    console.log("hello");
+    fetchWeather(e.currentTarget.textContent);
+
   })
 });
 

@@ -1,6 +1,6 @@
 
 var apiKey = "4f112ad8f388d7d13afdcbf2472fed94";
-
+var cityName = $("#cityNameInput").val();
 var todayWeather = (function (response) {
 
   var cityName = (response.name);
@@ -44,7 +44,6 @@ var todayWeather = (function (response) {
     .append(cardToday);
 
   $("#today-weather").append(colToday);
-
 });
 
 var forecastWeather = function (data) {
@@ -55,13 +54,11 @@ var forecastWeather = function (data) {
     var forecastDate = (data.list[i].dt_txt);
     const foreDate = new Date(forecastDate);
     var forecastDateinfo = (foreDate.toLocaleDateString('en-US'));
-
     var icon = (data.list[i].weather[0].icon);
     var forecastIcon = ("https://openweathermap.org/img/wn/" + icon + "@2x.png");
     var forecastTemp = (data.list[i].main.temp);
     var forecastWind = (data.list[i].wind.speed);
     var forecastHumidity = (data.list[i].main.humidity);
-
 
     var colforecast = $("<div>").addClass("col");
     var cardforecast = $("<div>").addClass("card");
@@ -71,7 +68,6 @@ var forecastWeather = function (data) {
     var cardforecastTemp = $("<div>").addClass("card-temp");
     var cardforecastWind = $("<div>").addClass("card-wind");
     var cardforecastHumidity = $("<div>").addClass("card-humidity");
-
 
     cardforecastDate.text(forecastDate);
     cardForecastIcon.attr("src", forecastIcon);
@@ -93,7 +89,6 @@ var forecastWeather = function (data) {
       .append(cardforecast);
 
     $("#forecast-weather").append(colforecast);
-
   }
 };
 
@@ -111,7 +106,6 @@ var savedBtn = function (searchedCity) {
   colSavedBtn.append(savedBtn);
 
   $(".row-btn-saved").append(colSavedBtn);
-
 };
 
 var fetchWeather = function (cityName) {
@@ -125,7 +119,7 @@ var fetchWeather = function (cityName) {
     })
 
     .then(function (data) {
-      console.log(data)
+
       for (var i = 0; i < data.length; i++) {
         var searchedCity = data[i].name;
         var latitude = (data[i].lat);
@@ -139,12 +133,13 @@ var fetchWeather = function (cityName) {
           localStorage.setItem("searched", JSON.stringify(history));
           $("#cityNameInput").val("");
           savedBtn(searchedCity);
+
         };
 
         fetch(todayWeathetUrl)
           .then(function (response) {
             if (response.ok) {
-            response.json().then(todayWeather);
+              response.json().then(todayWeather);
             }
           });
 
@@ -155,10 +150,10 @@ var fetchWeather = function (cityName) {
             if (response.ok) {
               response.json().then(forecastWeather);
             }
-          })
+          });
       }
     })
-}
+};
 
 $(".btn-primary").on("click", function (event) {
   event.preventDefault();
@@ -168,17 +163,17 @@ $(".btn-primary").on("click", function (event) {
   fetchWeather(cityName);
   forecastTitle();
   $("#cityNameInput").val("");
-
-
 });
 
-$(".btn-secondary").on("click", function (e) {
+$(".row-btn-saved").on("click", "div", function (e) {
   $("#today-weather").empty();
   $("#forecast-weather").empty();
-  console.log('hello')
+
   fetchWeather(e.currentTarget.textContent);
   forecastTitle();
-})
+});
+
+
 
 
 

@@ -62,6 +62,7 @@ var forecastWeather = function (data) {
     var forecastWind = (data.list[i].wind.speed);
     var forecastHumidity = (data.list[i].main.humidity);
 
+
     var colforecast = $("<div>").addClass("col");
     var cardforecast = $("<div>").addClass("card");
     var cardBodyforecast = $("<div>").addClass("card-body");
@@ -70,6 +71,7 @@ var forecastWeather = function (data) {
     var cardforecastTemp = $("<div>").addClass("card-temp");
     var cardforecastWind = $("<div>").addClass("card-wind");
     var cardforecastHumidity = $("<div>").addClass("card-humidity");
+
 
     cardforecastDate.text(forecastDate);
     cardForecastIcon.attr("src", forecastIcon);
@@ -95,6 +97,23 @@ var forecastWeather = function (data) {
   }
 };
 
+var forecastTitle = function () {
+  var colforecastTitle = $("<h4>").addClass("col-sm-12 ");
+  colforecastTitle.text("5-Day Forecast:");
+  $("#forecast-weather").append(colforecastTitle);
+};
+
+var savedBtn = function (searchedCity) {
+  var colSavedBtn = $("<div>").addClass("col saved-btn");
+  var savedBtn = $("<button>").addClass("btn btn-secondary");
+
+  savedBtn.text(searchedCity);
+  colSavedBtn.append(savedBtn);
+
+  $(".row-btn-saved").append(colSavedBtn);
+
+};
+
 var fetchWeather = function (cityName) {
 
   var requestUrl = "http://api.openweathermap.org/geo/1.0/direct?q=" + cityName + "&appid=" + apiKey;
@@ -104,47 +123,30 @@ var fetchWeather = function (cityName) {
       return response.json();
 
     })
+
     .then(function (data) {
       console.log(data)
       for (var i = 0; i < data.length; i++) {
         var searchedCity = data[i].name;
-
         var latitude = (data[i].lat);
         var longitude = (data[i].lon);
         var todayWeathetUrl = "https://api.openweathermap.org/data/2.5/weather?lat=" + latitude + "&lon=" + longitude + "&appid=" + apiKey + "&units=imperial";
-
         var history = JSON.parse(localStorage.getItem("searched")) || []
 
         if (!history.includes(searchedCity)) {
 
           history.push(searchedCity);
           localStorage.setItem("searched", JSON.stringify(history));
-        }
-
-        var colforecastTitle = $("<h4>").addClass("col-sm-12 ");
-        colforecastTitle.text("5-Day Forecast:");
-        $("#forecast-weather").append(colforecastTitle);
-
-        var colSavedBtn = $("<div>").addClass("col saved-btn");
-
-        var savedBtn = $("<button>").addClass("btn btn-secondary");
-
-
-        savedBtn.text(searchedCity);
-        colSavedBtn.append(savedBtn);
-
-        $(".row-btn-saved").append(colSavedBtn);
-
-        $("#cityNameInput").val("");
-
+          $("#cityNameInput").val("");
+          savedBtn(searchedCity);
+        };
 
         fetch(todayWeathetUrl)
           .then(function (response) {
             if (response.ok) {
-
-              response.json().then(todayWeather);
+            response.json().then(todayWeather);
             }
-          })
+          });
 
         var forecastUrl = "https://api.openweathermap.org/data/2.5/forecast?lat=" + latitude + "&lon=" + longitude + "&appid=" + apiKey + "&units=imperial";
 
@@ -164,15 +166,19 @@ $(".btn-primary").on("click", function (event) {
   $("#forecast-weather").empty();
   var cityName = $("#cityNameInput").val();
   fetchWeather(cityName);
+  forecastTitle();
+  $("#cityNameInput").val("");
 
-  $(".btn-secondary").on("click", function (e) {
-    $("#today-weather").empty();
-    $("#forecast-weather").empty();
 
-    fetchWeather(e.currentTarget.textContent);
-
-  })
 });
+
+$(".btn-secondary").on("click", function (e) {
+  $("#today-weather").empty();
+  $("#forecast-weather").empty();
+  console.log('hello')
+  fetchWeather(e.currentTarget.textContent);
+  forecastTitle();
+})
 
 
 

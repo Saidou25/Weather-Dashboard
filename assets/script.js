@@ -61,7 +61,7 @@ var forecastWeather = function (data) {
     var forecastHumidity = (data.list[i].main.humidity);
 
     var colforecast = $("<div>").addClass("col");
-    var cardforecast = $("<div>").addClass("card");
+    var cardforecast = $("<div>").addClass("card bg-primary text-white");
     var cardBodyforecast = $("<div>").addClass("card-body");
     var cardforecastDate = $("<div>").addClass("card-date");
     var cardForecastIcon = $("<img/>").addClass("card-icon");
@@ -99,7 +99,7 @@ var forecastTitle = function () {
 };
 
 var savedBtn = function (searchedCity) {
-  var colSavedBtn = $("<div>").addClass("col saved-btn");
+  var colSavedBtn = $("<div>").addClass("col saved-btn d-grid gap-2");
   var savedBtn = $("<button>").addClass("btn btn-secondary");
 
   savedBtn.text(searchedCity);
@@ -174,6 +174,9 @@ $(".btn-primary").on("click", function (event) {
   $("#today-weather").empty();
   $("#forecast-weather").empty();
   var cityName = $("#cityNameInput").val();
+  if (!cityName) {
+    alert('Please enter a valid city.');
+  }
   fetchWeather(cityName);
   forecastTitle();
   $("#cityNameInput").val("");

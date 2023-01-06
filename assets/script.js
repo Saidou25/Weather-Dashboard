@@ -117,6 +117,9 @@ var fetchWeather = function (cityName) {
       return response.json();
 
     })
+    .catch(function (error) {
+      alert('Unable to connect to server');
+    })
 
     .then(function (data) {
 
@@ -136,11 +139,17 @@ var fetchWeather = function (cityName) {
 
         };
 
+
         fetch(todayWeathetUrl)
           .then(function (response) {
             if (response.ok) {
               response.json().then(todayWeather);
+            } else {
+              alert('Error: ' + response.statusText);
             }
+          })
+          .catch(function (error) {
+            alert('Unable to connect to server');
           });
 
         var forecastUrl = "https://api.openweathermap.org/data/2.5/forecast?lat=" + latitude + "&lon=" + longitude + "&appid=" + apiKey + "&units=imperial";
@@ -149,7 +158,12 @@ var fetchWeather = function (cityName) {
           .then(function (response) {
             if (response.ok) {
               response.json().then(forecastWeather);
+            } else {
+              alert('Error: ' + response.statusText);
             }
+          })
+          .catch(function (error) {
+            alert('Unable to connect to server');
           });
       }
     })

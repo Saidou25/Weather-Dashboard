@@ -1,6 +1,8 @@
 
 var apiKey = "4f112ad8f388d7d13afdcbf2472fed94";
 var cityName = $("#cityNameInput").val();
+
+// ------------------------ todayWeather generates a card with weather info ---------------
 var todayWeather = (function (response) {
 
   var cityName = (response.name);
@@ -45,7 +47,9 @@ var todayWeather = (function (response) {
 
   $("#today-weather").append(colToday);
 });
+// ------------------------ // --------------------------------
 
+// ------------------------ forecastWeather generates a card with forecast weather info ---------------
 var forecastWeather = function (data) {
   $("forecast-weather").empty();
 
@@ -91,13 +95,17 @@ var forecastWeather = function (data) {
     $("#forecast-weather").append(colforecast);
   }
 };
+// ------------------------ // --------------------------------
 
+// ------------------------ generates 5- day forecast title --------------------------------
 var forecastTitle = function () {
   var colforecastTitle = $("<h4>").addClass("col-sm-12 ");
   colforecastTitle.text("5-Day Forecast:");
   $("#forecast-weather").append(colforecastTitle);
 };
+// ------------------------ // --------------------------------
 
+// ------------------------ generates buttons for saved cities --------------------------------
 var savedBtn = function (searchedCity) {
   var colSavedBtn = $("<div>").addClass("col saved-btn d-grid gap-2");
   var savedBtn = $("<button>").addClass("btn-space m-2 btn-secondary rounded");
@@ -107,7 +115,9 @@ var savedBtn = function (searchedCity) {
 
   $(".row-btn-saved").append(colSavedBtn);
 };
+// ------------------------ // --------------------------------
 
+// ------------------------ fetch and builts urls--------------------------------
 var fetchWeather = function (cityName) {
 
   var requestUrl = "https://api.openweathermap.org/geo/1.0/direct?q=" + cityName + "&appid=" + apiKey;
@@ -128,6 +138,7 @@ var fetchWeather = function (cityName) {
         var latitude = (data[i].lat);
         var longitude = (data[i].lon);
         var todayWeathetUrl = "https://api.openweathermap.org/data/2.5/weather?lat=" + latitude + "&lon=" + longitude + "&appid=" + apiKey + "&units=imperial";
+        // ------------------------ save cities to localstorage if they are not already saved -------------------------------- 
         var history = JSON.parse(localStorage.getItem("searched")) || []
 
         if (!history.includes(searchedCity)) {
@@ -138,12 +149,12 @@ var fetchWeather = function (cityName) {
           savedBtn(searchedCity);
 
         };
-
+        //  ------------------------ save cities to localstorage if they are not already saved -------------------------------- 
 
         fetch(todayWeathetUrl)
           .then(function (response) {
             if (response.ok) {
-              response.json().then(todayWeather);
+              response.json().then(todayWeather);//sends data to todayWeather() to generate cards
             } else {
               alert('Error: ' + response.statusText);
             }
@@ -157,7 +168,7 @@ var fetchWeather = function (cityName) {
         fetch(forecastUrl)
           .then(function (response) {
             if (response.ok) {
-              response.json().then(forecastWeather);
+              response.json().then(forecastWeather);//sends data to forecastWeather() to generate cards
             } else {
               alert('Error: ' + response.statusText);
             }
@@ -168,7 +179,9 @@ var fetchWeather = function (cityName) {
       }
     })
 };
+// ------------------------ // --------------------------------
 
+// ------------------------ init the all fetching operation  and creates save buttons--------------------------------
 $(".btn-primary").on("click", function (event) {
   event.preventDefault();
   $("#today-weather").empty();
@@ -181,7 +194,9 @@ $(".btn-primary").on("click", function (event) {
   forecastTitle();
   $("#cityNameInput").val("");
 });
+// ------------------------ // --------------------------------
 
+// ------------------------ access saved cities from localStorage --------------------------------
 $(".row-btn-saved").on("click", "div", function (e) {
   $("#today-weather").empty();
   $("#forecast-weather").empty();
@@ -189,7 +204,7 @@ $(".row-btn-saved").on("click", "div", function (e) {
   fetchWeather(e.currentTarget.textContent);
   forecastTitle();
 });
-
+// ------------------------ // --------------------------------
 
 
 

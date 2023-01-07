@@ -100,7 +100,7 @@ var forecastTitle = function () {
 
 var savedBtn = function (searchedCity) {
   var colSavedBtn = $("<div>").addClass("col saved-btn d-grid gap-2");
-  var savedBtn = $("<button>").addClass("btn btn-secondary");
+  var savedBtn = $("<button>").addClass("btn-space m-2 btn-secondary rounded");
 
   savedBtn.text(searchedCity);
   colSavedBtn.append(savedBtn);
@@ -110,7 +110,7 @@ var savedBtn = function (searchedCity) {
 
 var fetchWeather = function (cityName) {
 
-  var requestUrl = "http://api.openweathermap.org/geo/1.0/direct?q=" + cityName + "&appid=" + apiKey;
+  var requestUrl = "https://api.openweathermap.org/geo/1.0/direct?q=" + cityName + "&appid=" + apiKey;
 
   fetch(requestUrl)
     .then(function (response) {

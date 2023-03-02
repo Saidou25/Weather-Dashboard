@@ -1,14 +1,58 @@
+.header {
+    height: 100px;
+    background-color: rgb(33, 33, 233);
+}
+
 h1 {
     text-align: center;
-    background-color: rgb(67, 67, 232);
     color: white;
+    padding-top: 20px;
 }
 
-;
+.main-row {
+    width: 100%;
+}
 
 img {
-    height: 10px;
-    width: 10px;
+    height: 60px;
+    width: 60px;
 }
 
-;
+button {
+    /* background-color: beige; */
+    width: 100%;
+}
+
+main {
+    background-color: rgb(112, 190, 243);
+    height: 878px;
+}
+
+.today {
+   border: solid;
+   border-color: rgb(33, 33, 233);
+   background-color: rgb(112, 217, 243);
+}
+
+@media screen and (max-width: 923px) {
+
+    main {
+        height: auto;
+    }
+}
+
+@media screen and (max-width: 710px) {
+    #forecast-weather {
+        display: flex;
+        flex-direction: column;
+        text-align: center;
+    }
+
+    .card {
+        margin-top: 5px;
+    }
+
+    main {
+        height: auto;
+    }
+};

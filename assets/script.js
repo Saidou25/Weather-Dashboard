@@ -17,14 +17,14 @@ var todayWeather = (function (response) {
   var todayHumidity = (response.main.humidity);
   var todayWind = (response.wind.speed);
 
-  var colToday = $("<div>").addClass("col-sm-12");
-  var cardToday = $("<div>").addClass("card");
+  var colToday = $("<div>").addClass("col-12");
+  var cardToday = $("<div>").addClass("card bg-primary text-white");
   var cardTodayBody = $("<div>").addClass("card-body");
   var cardcityName = $("<h3>").addClass("card-title");
   var cardTodayIcon = $("<img/>").addClass("card-icon");
-  var cardTodayTemp = $("<div>").addClass("card-temp");
-  var cardTodayHumidity = $("<div>").addClass("card-humidity");
-  var cardTodayWind = $("<div>").addClass("card-wind");
+  var cardTodayTemp = $("<div>").addClass("card-temp pt-2");
+  var cardTodayHumidity = $("<div>").addClass("card-humidity pt-2");
+  var cardTodayWind = $("<div>").addClass("card-wind pt-2");
 
   cardcityName.text(cityName + " " + "(" + todayDateinfo + ")");
   cardTodayIcon.attr("src", todayIcon);
@@ -64,14 +64,14 @@ var forecastWeather = function (data) {
     var forecastWind = (data.list[i].wind.speed);
     var forecastHumidity = (data.list[i].main.humidity);
 
-    var colforecast = $("<div>").addClass("col");
+    var colforecast = $("<div>").addClass("col colforecast");
     var cardforecast = $("<div>").addClass("card bg-primary text-white");
     var cardBodyforecast = $("<div>").addClass("card-body");
     var cardforecastDate = $("<div>").addClass("card-date");
     var cardForecastIcon = $("<img/>").addClass("card-icon");
-    var cardforecastTemp = $("<div>").addClass("card-temp");
-    var cardforecastWind = $("<div>").addClass("card-wind");
-    var cardforecastHumidity = $("<div>").addClass("card-humidity");
+    var cardforecastTemp = $("<div>").addClass("card-temp pt-2");
+    var cardforecastWind = $("<div>").addClass("card-wind pt-2");
+    var cardforecastHumidity = $("<div>").addClass("card-humidity pt-2");
 
     cardforecastDate.text(forecastDate);
     cardForecastIcon.attr("src", forecastIcon);
@@ -99,7 +99,7 @@ var forecastWeather = function (data) {
 
 // ------------------------ generates 5- day forecast title --------------------------------
 var forecastTitle = function () {
-  var colforecastTitle = $("<h4>").addClass("col-sm-12 ");
+  var colforecastTitle = $("<h4>").addClass("col-12 pt-5 pb-5");
   colforecastTitle.text("5-Day Forecast:");
   $("#forecast-weather").append(colforecastTitle);
 };
@@ -107,8 +107,8 @@ var forecastTitle = function () {
 
 // ------------------------ generates buttons for saved cities --------------------------------
 var savedBtn = function (searchedCity) {
-  var colSavedBtn = $("<div>").addClass("col saved-btn d-grid gap-2");
-  var savedBtn = $("<button>").addClass("btn-space m-2 btn-secondary rounded");
+  var colSavedBtn = $("<div>").addClass("col-12 s-3 saved-btn ");
+  var savedBtn = $("<button>").addClass("btn-secondary mt-2 mb-2 rounded");
 
   savedBtn.text(searchedCity);
   colSavedBtn.append(savedBtn);

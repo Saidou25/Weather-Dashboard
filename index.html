@@ -13,33 +13,31 @@
 <body>
 
     <header>
-        <h1>Weather Dashboard</h1>
+        <div class="header">
+            <h1>Weather Dashboard</h1>
+        </div>
     </header>
 
     <main>
-        <div class="container-border">
-            <div class="row" id="main-row">
-                <div class="col-sm-3">
-                    <label for="citylistOptions" class="form-label">
-                        <h3>Search for a City:</h3>
-                    </label>
-                    <input class="form-control" list="citylistOptions" id="cityNameInput"
-                        placeholder="Type to search..."></input>
-                    <datalist id="citylistOptions">
-                        <option value="asheville">
-                        <option value="missoula">
-                        <option value="miami">
-                    </datalist>
-                    <div class="d-grid gap-2">
-                        <button type="button" class="btn-primary">search</button>
-                    </div>
-                    <hr class="hr" />
-                    <div type="button" class="row-btn-saved"></div>
-                </div>
-                <div class="col-sm-9">
-                    <div class="row" id="today-weather"></div>
-                    <div class="row" id="forecast-weather"></div>
-                </div>
+        <div class="row p-5" id="main-row">
+            <div class="col-lg-3 col-md-12 pt-3">
+                <label for="citylistOptions" class="form-label">
+                    <h3>Search for a City:</h3>
+                </label>
+                <input class="form-control" list="citylistOptions" id="cityNameInput"
+                    placeholder="Type to search..."></input>
+                <datalist id="citylistOptions">
+                    <option value="asheville">
+                    <option value="missoula">
+                    <option value="miami">
+                </datalist>
+                <button type="button" class="btn-primary mt-3 rounded">search</button>
+                <hr class="hr" />
+                <div type="button" class="row-btn-saved"></div>
+            </div>
+            <div class="col-lg-9 col-md-12">
+                <div class="row" id="today-weather"></div>
+                <div class="row" id="forecast-weather"></div>
             </div>
         </div>
     </main>

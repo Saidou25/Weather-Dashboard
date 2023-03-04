@@ -107,7 +107,7 @@ var forecastTitle = function () {
 
 // ------------------------ generates buttons for saved cities --------------------------------
 var savedBtn = function (searchedCity) {
-  var colSavedBtn = $("<div>").addClass("col-12 s-3 saved-btn ");
+  var colSavedBtn = $("<div>").addClass("col-12 s-3");
   var savedBtn = $("<button>").addClass("btn-secondary mt-2 mb-2 rounded");
 
   savedBtn.text(searchedCity);
@@ -182,7 +182,7 @@ var fetchWeather = function (cityName) {
 // ------------------------ // --------------------------------
 
 // ------------------------ init the all fetching operation  and creates save buttons--------------------------------
-$(".btn-primary").on("click", function (event) {
+$(".btn-primary-overlay").on("click", function (event) {
   event.preventDefault();
   $("#today-weather").empty();
   $("#forecast-weather").empty();

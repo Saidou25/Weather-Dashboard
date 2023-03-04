@@ -33,14 +33,44 @@ main {
 .today {
     border: solid;
 }
-
-/* .form-overlay {
+.hr {
+    color: black;
+  
+}
+.form-overlay{
     background-color: rgba(0, 0, 0, 0.3);
     padding: 9px;
     border-style: solid;
     border-radius: 10px;
-} */
-
+}
+.form-control-overlay{
+    background-color: rgba(0, 0, 0, 0.3);
+    padding: 9px;
+    border-style: solid;
+    border-color: black;
+    border-radius: 10px;
+    color: white;
+}
+.btn-primary-overlay {
+    background-color: rgba(0, 0, 0, 0.3);
+    padding: 9px;
+    border-style: solid;
+    border-color: black;
+    border-radius: 10px;
+    color: white;
+}
+.btn-secondary {
+    background-color: rgba(0, 0, 0, 0.3);
+    padding: 2px;
+    border-color: black;
+    border-style: solid;
+    border-radius: 10px;
+    color: white;
+   
+}
+::placeholder {
+    color: white;
+}
 .card-overlay-today {
     background-color: rgba(0, 0, 0, 0.3);
     padding: 9px;
@@ -66,6 +96,39 @@ main {
     color: rgb(255, 255, 255, 1);
 
 }
+@media screen and (max-width: 1143px) {
+    /* #intro {
+        background-image: url("./images/newsky.png");
+        height: 100%;
+        background-size: cover;
+        background-repeat: no-repeat;
+    } */
+    .card-overlay {
+        background-color: rgba(0, 0, 0, 0.3);
+        height:300px;
+        padding: 9px;
+        border-style: solid;
+        border-radius: 10px;
+        
+    
+    }
+    main {
+        height: auto;
+    }
+}
+@media screen and (max-width: 992px) {
+    .card-overlay {
+        background-color: rgba(0, 0, 0, 0.3);
+        height:200px;
+        padding: 9px;
+        border-style: solid;
+        border-radius: 10px;
+    }
+
+    main {
+        height: auto;
+    }
+}
 
 @media screen and (max-width: 923px) {
 
@@ -73,8 +136,21 @@ main {
         height: auto;
     }
 }
+@media screen and (max-width: 905px) {
+    .card-overlay {
+        background-color: rgba(0, 0, 0, 0.3);
+        height:250px;
+        padding: 9px;
+        border-style: solid;
+        border-radius: 10px;
+    }
 
-@media screen and (max-width: 710px) {
+    main {
+        height: auto;
+    }
+}
+
+@media screen and (max-width: 850px) {
     #forecast-weather {
         display: flex;
         flex-direction: column;

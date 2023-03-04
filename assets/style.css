@@ -1,16 +1,20 @@
-.header {
-    height: 100px;
-    background-color: rgb(33, 33, 233);
+#intro {
+    background-image: url("./images/newsky.png");
+    height: 100vh;
+    background-size: cover;
+    background-repeat: no-repeat;
 }
 
 h1 {
     text-align: center;
     color: white;
     padding-top: 20px;
+    opacity: 1;
 }
 
 .main-row {
     width: 100%;
+
 }
 
 img {
@@ -19,19 +23,48 @@ img {
 }
 
 button {
-    /* background-color: beige; */
     width: 100%;
 }
 
 main {
-    background-color: rgb(112, 190, 243);
     height: 878px;
 }
 
 .today {
-   border: solid;
-   border-color: rgb(33, 33, 233);
-   background-color: rgb(112, 217, 243);
+    border: solid;
+}
+
+/* .form-overlay {
+    background-color: rgba(0, 0, 0, 0.3);
+    padding: 9px;
+    border-style: solid;
+    border-radius: 10px;
+} */
+
+.card-overlay-today {
+    background-color: rgba(0, 0, 0, 0.3);
+    padding: 9px;
+    border-style: solid;
+    border-radius: 10px;
+
+}
+
+.card-overlay {
+    background-color: rgba(0, 0, 0, 0.3);
+    height: 220px;
+    padding: 9px;
+    border-style: solid;
+    border-radius: 10px;
+
+}
+
+.card-temp,
+.card-forecastDate,
+.card-title,
+.card-humidity,
+.card-wind {
+    color: rgb(255, 255, 255, 1);
+
 }
 
 @media screen and (max-width: 923px) {

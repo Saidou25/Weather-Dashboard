@@ -18,7 +18,7 @@ var todayWeather = (function (response) {
   var todayWind = (response.wind.speed);
 
   var colToday = $("<div>").addClass("col-12");
-  var cardToday = $("<div>").addClass("card bg-primary text-white");
+  var cardToday = $("<div>").addClass("card-overlay-today");
   var cardTodayBody = $("<div>").addClass("card-body");
   var cardcityName = $("<h3>").addClass("card-title");
   var cardTodayIcon = $("<img/>").addClass("card-icon");
@@ -57,7 +57,7 @@ var forecastWeather = function (data) {
 
     var forecastDate = (data.list[i].dt_txt);
     const foreDate = new Date(forecastDate);
-    var forecastDateinfo = (foreDate.toLocaleDateString('en-US'));
+    var forecastDate = (foreDate.toLocaleDateString('en-US'));
     var icon = (data.list[i].weather[0].icon);
     var forecastIcon = ("https://openweathermap.org/img/wn/" + icon + "@2x.png");
     var forecastTemp = (data.list[i].main.temp);
@@ -65,9 +65,9 @@ var forecastWeather = function (data) {
     var forecastHumidity = (data.list[i].main.humidity);
 
     var colforecast = $("<div>").addClass("col colforecast");
-    var cardforecast = $("<div>").addClass("card bg-primary text-white");
+    var cardforecast = $("<div>").addClass("card-overlay");
     var cardBodyforecast = $("<div>").addClass("card-body");
-    var cardforecastDate = $("<div>").addClass("card-date");
+    var cardforecastDate = $("<div>").addClass("card-forecastDate");
     var cardForecastIcon = $("<img/>").addClass("card-icon");
     var cardforecastTemp = $("<div>").addClass("card-temp pt-2");
     var cardforecastWind = $("<div>").addClass("card-wind pt-2");
@@ -80,14 +80,14 @@ var forecastWeather = function (data) {
     cardforecastWind.text("Wind: " + forecastWind + " MPH");
 
     cardBodyforecast
-      .append(forecastDateinfo)
+      .append(cardforecastDate)
       .append(cardForecastIcon)
       .append(cardforecastTemp)
       .append(cardforecastWind)
       .append(cardforecastHumidity);
 
     cardforecast
-      .append(cardBodyforecast);
+      .append(cardBodyforecast)
 
     colforecast
       .append(cardforecast);
@@ -99,7 +99,7 @@ var forecastWeather = function (data) {
 
 // ------------------------ generates 5- day forecast title --------------------------------
 var forecastTitle = function () {
-  var colforecastTitle = $("<h4>").addClass("col-12 pt-5 pb-5");
+  var colforecastTitle = $("<h3>").addClass("col-12 text-white pt-5 pb-5");
   colforecastTitle.text("5-Day Forecast:");
   $("#forecast-weather").append(colforecastTitle);
 };
